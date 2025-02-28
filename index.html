@@ -10,9 +10,9 @@
             text-align: center;
             padding: 20px;
             background-image: url('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/bg.webp'); /* 背景图 */
-            background-size: cover; /* 背景图覆盖整个页面 */
-            background-position: center center; /* 背景图居中 */
-            background-attachment: fixed; /* 背景图固定，不随页面滚动 */
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
             color: #333; /* 设置文本颜色为深色，确保与浅色背景有足够对比 */
             margin: 0;
             height: 100vh;
@@ -62,7 +62,7 @@
 </head>
 <body>
 
-<h1>逼哥专辑</h1>
+<h1>欢迎来到音乐播放网站</h1>
 
 <audio id="audioPlayer" controls>
     <source src="" type="audio/mp3">
@@ -70,6 +70,7 @@
 </audio>
 
 <div id="albumListContainer">
+    <h2>专辑列表</h2>
     <ul id="albumList" class="album-list">
         <!-- 专辑列表会在这里生成 -->
     </ul>
@@ -80,8 +81,8 @@
             {
                 name: '这个世界会好吗',
                 songs: [
-                    { name: '妈妈', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/%E5%A6%88%E5%A6%88.wav' },
-                    { name: '歌曲2', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song2.mp3' },
+                    { name: '交河', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/%E4%BA%A4%E6%B2%B3.wav' },
+                    { name: '他们', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/%E4%BB%96%E4%BB%AC.wav' },
                     { name: '歌曲3', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3' }
                 ]
             },
@@ -94,12 +95,35 @@
             }
         ];
 
+        let currentAlbumIndex = 0;
+        let currentSongIndex = 0;
+
+        // 播放音乐
+        function playMusic(url) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = url;
+            audioPlayer.play();
+        }
+
+        // 播放下一首
+        function playNextSong() {
+            currentSongIndex++;
+            if (currentSongIndex >= albums[currentAlbumIndex].songs.length) {
+                currentSongIndex = 0;  // 如果已播放到最后一首，回到第一首
+                currentAlbumIndex = (currentAlbumIndex + 1) % albums.length;  // 如果当前专辑播放完，切换到下一专辑
+            }
+            playMusic(albums[currentAlbumIndex].songs[currentSongIndex].url);
+        }
+
+        // 监听音乐播放结束事件，自动播放下一首
+        document.getElementById('audioPlayer').addEventListener('ended', playNextSong);
+
         // 渲染专辑列表
         function renderAlbumList() {
             const albumListContainer = document.getElementById('albumList');
             albumListContainer.innerHTML = ''; // 清空列表
 
-            albums.forEach((album) => {
+            albums.forEach((album, albumIndex) => {
                 const albumItem = document.createElement('li');
                 albumItem.classList.add('album-item');
 
@@ -111,11 +135,15 @@
 
                 // 创建歌曲列表
                 const songList = document.createElement('ul');
-                album.songs.forEach((song) => {
+                album.songs.forEach((song, songIndex) => {
                     const songItem = document.createElement('li');
                     songItem.classList.add('song-item');
                     songItem.innerText = song.name;
-                    songItem.onclick = () => playMusic(song.url);
+                    songItem.onclick = () => {
+                        currentAlbumIndex = albumIndex;
+                        currentSongIndex = songIndex;
+                        playMusic(song.url);
+                    };
                     songList.appendChild(songItem);
                 });
 
@@ -123,13 +151,6 @@
                 albumItem.appendChild(details);
                 albumListContainer.appendChild(albumItem);
             });
-        }
-
-        // 播放音乐
-        function playMusic(url) {
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = url;
-            audioPlayer.play();
         }
 
         // 初始化渲染
