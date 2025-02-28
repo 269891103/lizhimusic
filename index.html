@@ -9,23 +9,37 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            background-image: url('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/bg.webp'); /* 修改这里为你图片的 URL */
+            background-size: cover; /* 背景图覆盖整个页面 */
+            background-position: center center; /* 背景图居中 */
+            background-attachment: fixed; /* 背景图固定，不随页面滚动 */
+            color: #fff; /* 设置文本颜色为白色，确保与背景图对比清晰 */
         }
+
+        h1, h2 {
+            color: #fff; /* 设置标题文字颜色 */
+        }
+
         audio {
             width: 100%;
             max-width: 600px;
         }
+
         .album-list, .song-list {
             list-style: none;
             padding: 0;
             margin-top: 20px;
         }
+
         .album-item, .song-item {
             margin: 10px 0;
             cursor: pointer;
         }
+
         .album-item:hover, .song-item:hover {
             text-decoration: underline;
         }
+
         details {
             margin: 10px 0;
         }
