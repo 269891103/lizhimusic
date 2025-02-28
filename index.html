@@ -14,14 +14,17 @@
             width: 100%;
             max-width: 600px;
         }
-        .music-list {
-            margin-top: 20px;
+        .album-list, .song-list {
             list-style: none;
             padding: 0;
+            margin-top: 20px;
         }
-        .music-item {
+        .album-item, .song-item {
             margin: 10px 0;
             cursor: pointer;
+        }
+        .album-item:hover, .song-item:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -34,18 +37,82 @@
     您的浏览器不支持音频播放。
 </audio>
 
-<ul class="music-list">
-    <li class="music-item" onclick="playMusic('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/2.mp3?x-oss-credential=LTAI5tFSBLP7zN2bCk4H7Pyy%2F20250228%2Fcn-shenzhen%2Foss%2Faliyun_v4_request&x-oss-date=20250228T150812Z&x-oss-expires=3600&x-oss-signature-version=OSS4-HMAC-SHA256&x-oss-signature=3af389b3e817450758e7d84c6fe260f0377ec1e408412fddac97a922b1568f00')">歌曲1</li>
-    <li class="music-item" onclick="playMusic('https://your-bucket-name.oss-cn-region.aliyuncs.com/song2.mp3')">歌曲2</li>
-    <li class="music-item" onclick="playMusic('https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3')">歌曲3</li>
-</ul>
+<div id="albumListContainer">
+    <h2>专辑列表</h2>
+    <ul id="albumList" class="album-list">
+        <!-- 专辑列表会在这里生成 -->
+    </ul>
+</div>
+
+<div id="songListContainer" style="display: none;">
+    <h2>歌曲列表</h2>
+    <ul id="songList" class="song-list">
+        <!-- 歌曲列表会在这里生成 -->
+    </ul>
+</div>
 
 <script>
+        const albums = [
+            {
+                name: '专辑1',
+                songs: [
+                    { name: '歌曲1', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song1.mp3' },
+                    { name: '歌曲2', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song2.mp3' },
+                    { name: '歌曲3', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3' }
+                ]
+            },
+            {
+                name: '专辑2',
+                songs: [
+                    { name: '歌曲A', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/songA.mp3' },
+                    { name: '歌曲B', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/songB.mp3' }
+                ]
+            }
+        ];
+
+        // 渲染专辑列表
+        function renderAlbumList() {
+            const albumListContainer = document.getElementById('albumList');
+            albumListContainer.innerHTML = ''; // 清空列表
+
+            albums.forEach((album, index) => {
+                const albumItem = document.createElement('li');
+                albumItem.classList.add('album-item');
+                albumItem.innerText = album.name;
+                albumItem.onclick = () => showSongList(index);
+                albumListContainer.appendChild(albumItem);
+            });
+        }
+
+        // 显示歌曲列表
+        function showSongList(albumIndex) {
+            const songListContainer = document.getElementById('songList');
+            songListContainer.innerHTML = ''; // 清空列表
+
+            const album = albums[albumIndex];
+
+            // 隐藏专辑列表，显示歌曲列表
+            document.getElementById('albumListContainer').style.display = 'none';
+            document.getElementById('songListContainer').style.display = 'block';
+
+            album.songs.forEach((song) => {
+                const songItem = document.createElement('li');
+                songItem.classList.add('song-item');
+                songItem.innerText = song.name;
+                songItem.onclick = () => playMusic(song.url);
+                songListContainer.appendChild(songItem);
+            });
+        }
+
+        // 播放音乐
         function playMusic(url) {
             const audioPlayer = document.getElementById('audioPlayer');
             audioPlayer.src = url;
             audioPlayer.play();
         }
+
+        // 初始化渲染
+        renderAlbumList();
     </script>
 
 </body>
