@@ -26,6 +26,9 @@
         .album-item:hover, .song-item:hover {
             text-decoration: underline;
         }
+        details {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -41,13 +44,6 @@
     <h2>专辑列表</h2>
     <ul id="albumList" class="album-list">
         <!-- 专辑列表会在这里生成 -->
-    </ul>
-</div>
-
-<div id="songListContainer" style="display: none;">
-    <h2>歌曲列表</h2>
-    <ul id="songList" class="song-list">
-        <!-- 歌曲列表会在这里生成 -->
     </ul>
 </div>
 
@@ -75,32 +71,29 @@
             const albumListContainer = document.getElementById('albumList');
             albumListContainer.innerHTML = ''; // 清空列表
 
-            albums.forEach((album, index) => {
+            albums.forEach((album) => {
                 const albumItem = document.createElement('li');
                 albumItem.classList.add('album-item');
-                albumItem.innerText = album.name;
-                albumItem.onclick = () => showSongList(index);
+
+                // 使用 details 和 summary 来折叠/展开专辑下面的歌曲列表
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.innerText = album.name;
+                details.appendChild(summary);
+
+                // 创建歌曲列表
+                const songList = document.createElement('ul');
+                album.songs.forEach((song) => {
+                    const songItem = document.createElement('li');
+                    songItem.classList.add('song-item');
+                    songItem.innerText = song.name;
+                    songItem.onclick = () => playMusic(song.url);
+                    songList.appendChild(songItem);
+                });
+
+                details.appendChild(songList);
+                albumItem.appendChild(details);
                 albumListContainer.appendChild(albumItem);
-            });
-        }
-
-        // 显示歌曲列表
-        function showSongList(albumIndex) {
-            const songListContainer = document.getElementById('songList');
-            songListContainer.innerHTML = ''; // 清空列表
-
-            const album = albums[albumIndex];
-
-            // 隐藏专辑列表，显示歌曲列表
-            document.getElementById('albumListContainer').style.display = 'none';
-            document.getElementById('songListContainer').style.display = 'block';
-
-            album.songs.forEach((song) => {
-                const songItem = document.createElement('li');
-                songItem.classList.add('song-item');
-                songItem.innerText = song.name;
-                songItem.onclick = () => playMusic(song.url);
-                songListContainer.appendChild(songItem);
             });
         }
 
