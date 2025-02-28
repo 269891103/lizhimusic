@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放网站</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        audio {
+            width: 100%;
+            max-width: 600px;
+        }
+        .music-list {
+            margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+        .music-item {
+            margin: 10px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>欢迎来到音乐播放网站</h1>
+
+<audio id="audioPlayer" controls>
+    <source src="" type="audio/mp3">
+    您的浏览器不支持音频播放。
+</audio>
+
+<ul class="music-list">
+    <li class="music-item" onclick="playMusic('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/2.mp3?x-oss-credential=LTAI5tFSBLP7zN2bCk4H7Pyy%2F20250228%2Fcn-shenzhen%2Foss%2Faliyun_v4_request&x-oss-date=20250228T150812Z&x-oss-expires=3600&x-oss-signature-version=OSS4-HMAC-SHA256&x-oss-signature=3af389b3e817450758e7d84c6fe260f0377ec1e408412fddac97a922b1568f00')">歌曲1</li>
+    <li class="music-item" onclick="playMusic('https://your-bucket-name.oss-cn-region.aliyuncs.com/song2.mp3')">歌曲2</li>
+    <li class="music-item" onclick="playMusic('https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3')">歌曲3</li>
+</ul>
+
+<script>
+        function playMusic(url) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = url;
+            audioPlayer.play();
+        }
+    </script>
+
+</body>
+</html>
