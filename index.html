@@ -58,11 +58,21 @@
             margin-top: 20px;
             border-radius: 10px;
         }
+
+        #nowPlaying {
+            font-size: 1.5em;
+            margin: 20px;
+            color: #fff;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
 <h1>欢迎来到音乐播放网站</h1>
+
+<!-- 动态更新的歌曲标题 -->
+<h2 id="nowPlaying">正在播放：无</h2> <!-- 显示正在播放的歌曲名 -->
 
 <audio id="audioPlayer" controls>
     <source src="" type="audio/mp3">
@@ -81,9 +91,9 @@
             {
                 name: '这个世界会好吗',
                 songs: [
+                    { name: '这个世界会好吗', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/zgsjhhm.wav' },
                     { name: '交河', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/%E4%BA%A4%E6%B2%B3.wav' },
-                    { name: '他们', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/%E4%BB%96%E4%BB%AC.wav' },
-                    { name: '歌曲3', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3' }
+                    { name: '他们', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/zgsjhhm/%E4%BB%96%E4%BB%AC.wav' }
                 ]
             },
             {
@@ -99,10 +109,17 @@
         let currentSongIndex = 0;
 
         // 播放音乐
-        function playMusic(url) {
+        function playMusic(url, songName) {
             const audioPlayer = document.getElementById('audioPlayer');
             audioPlayer.src = url;
             audioPlayer.play();
+            updateNowPlaying(songName); // 更新正在播放的歌曲名
+        }
+
+        // 更新正在播放的歌曲信息
+        function updateNowPlaying(songName) {
+            const nowPlayingDiv = document.getElementById('nowPlaying');
+            nowPlayingDiv.textContent = `正在播放：${songName}`;
         }
 
         // 播放下一首
@@ -112,7 +129,8 @@
                 currentSongIndex = 0;  // 如果已播放到最后一首，回到第一首
                 currentAlbumIndex = (currentAlbumIndex + 1) % albums.length;  // 如果当前专辑播放完，切换到下一专辑
             }
-            playMusic(albums[currentAlbumIndex].songs[currentSongIndex].url);
+            const song = albums[currentAlbumIndex].songs[currentSongIndex];
+            playMusic(song.url, song.name);
         }
 
         // 监听音乐播放结束事件，自动播放下一首
@@ -142,7 +160,7 @@
                     songItem.onclick = () => {
                         currentAlbumIndex = albumIndex;
                         currentSongIndex = songIndex;
-                        playMusic(song.url);
+                        playMusic(song.url, song.name);
                     };
                     songList.appendChild(songItem);
                 });
