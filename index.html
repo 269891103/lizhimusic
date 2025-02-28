@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background-image: url('https://your-bucket-name.oss-cn-region.aliyuncs.com/background.jpg'); /* 背景图 */
+            background-image: url('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/bg.webp'); /* 背景图 */
             background-size: cover; /* 背景图覆盖整个页面 */
             background-position: center center; /* 背景图居中 */
             background-attachment: fixed; /* 背景图固定，不随页面滚动 */
@@ -62,7 +62,7 @@
 </head>
 <body>
 
-<h1>欢迎来到音乐播放网站</h1>
+<h1>逼哥专辑</h1>
 
 <audio id="audioPlayer" controls>
     <source src="" type="audio/mp3">
@@ -70,7 +70,6 @@
 </audio>
 
 <div id="albumListContainer">
-    <h2>专辑列表</h2>
     <ul id="albumList" class="album-list">
         <!-- 专辑列表会在这里生成 -->
     </ul>
@@ -79,9 +78,9 @@
 <script>
         const albums = [
             {
-                name: '专辑1',
+                name: '动物凶猛',
                 songs: [
-                    { name: '歌曲1', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song1.mp3' },
+                    { name: '天空之城', url: 'https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/%E5%8A%A8%E7%89%A9%E5%87%B6%E7%8C%9B/%E5%A4%A9%E7%A9%BA%E4%B9%8B%E5%9F%8E.m4a' },
                     { name: '歌曲2', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song2.mp3' },
                     { name: '歌曲3', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/song3.mp3' }
                 ]
