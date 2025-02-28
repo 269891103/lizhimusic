@@ -9,39 +9,54 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background-image: url('https://lizhi-music.oss-cn-shenzhen.aliyuncs.com/bg.webp'); /* 修改这里为你图片的 URL */
+            background-image: url('https://your-bucket-name.oss-cn-region.aliyuncs.com/background.jpg'); /* 背景图 */
             background-size: cover; /* 背景图覆盖整个页面 */
             background-position: center center; /* 背景图居中 */
             background-attachment: fixed; /* 背景图固定，不随页面滚动 */
-            color: #fff; /* 设置文本颜色为白色，确保与背景图对比清晰 */
+            color: #333; /* 设置文本颜色为深色，确保与浅色背景有足够对比 */
+            margin: 0;
+            height: 100vh;
         }
 
         h1, h2 {
-            color: #fff; /* 设置标题文字颜色 */
-        }
-
-        audio {
-            width: 100%;
-            max-width: 600px;
+            color: #222; /* 设置标题颜色为深色 */
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7); /* 添加白色阴影，增强可读性 */
         }
 
         .album-list, .song-list {
             list-style: none;
             padding: 0;
             margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5); /* 给专辑和歌曲列表加半透明的黑色背景 */
+            border-radius: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
         }
 
         .album-item, .song-item {
             margin: 10px 0;
             cursor: pointer;
+            font-size: 1.2em;
+            padding: 5px;
+            transition: all 0.3s ease;
         }
 
         .album-item:hover, .song-item:hover {
             text-decoration: underline;
+            background-color: rgba(255, 255, 255, 0.3); /* 鼠标悬停时改变背景色 */
         }
 
         details {
             margin: 10px 0;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -72,7 +87,7 @@
                 ]
             },
             {
-                name: '专辑211',
+                name: '专辑2',
                 songs: [
                     { name: '歌曲A', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/songA.mp3' },
                     { name: '歌曲B', url: 'https://your-bucket-name.oss-cn-region.aliyuncs.com/songB.mp3' }
